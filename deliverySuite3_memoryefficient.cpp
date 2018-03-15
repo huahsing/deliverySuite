@@ -57,17 +57,11 @@ void DeliverySuite::ArrivalAtHospital(string womanName, int dilation)
 // O(logN)
 void DeliverySuite::UpdateDilation(string womanName, int increaseDilation)
 {
-  // get reference from WomanMap as we want to modify its dilation later
   Woman *w = WomanMap.find(womanName)->second; // O(1)
-  
-  // get a copy from DilationQueue as we want to erase it later (auto destroyed by map)
-  //Woman w2 = DilationQueue[queueIndex(w.dilation)].find(w.arrivalNumber)->second; // O(logN)
-  // erase from old position/queue in dilation queue
   DilationQueue[queueIndex(w->dilation)].erase(w->arrivalNumber); // O(logN)
   
   // update dilation
   w->dilation += increaseDilation;
-  //w2.dilation += increaseDilation;
   
   // reinsert into dilation queue at new index
   DilationQueue[queueIndex(w->dilation)].insert(make_pair(w->arrivalNumber, w)); // O(logN)
